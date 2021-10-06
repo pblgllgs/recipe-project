@@ -1,6 +1,7 @@
 package com.pblgllgs.recipeproject.models;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -15,14 +16,16 @@ public class Recipe {
     private Integer cookTime;
     private Integer servings;
     private Integer source;
-    private Integer directions;
+
+    @Lob
+    private String directions;
     private Integer url;
 
     /*
     tendra un conjunto de uno o muchos ingredientes
      */
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "recipe")
-    private Set<Ingredient> ingredients;
+    private Set<Ingredient> ingredients = new HashSet<>();
 
     @Lob
     private Byte[] image;
@@ -41,7 +44,7 @@ public class Recipe {
             name = "recipe_category",
             joinColumns = @JoinColumn(name = "recipe_id"),
             inverseJoinColumns = @JoinColumn(name = "category_id"))
-    private Set<Category> categories;
+    private Set<Category> categories = new HashSet<>();
 
     public void setId(Long id) {
         this.id = id;
@@ -91,11 +94,11 @@ public class Recipe {
         this.source = source;
     }
 
-    public Integer getDirections() {
+    public String getDirections() {
         return directions;
     }
 
-    public void setDirections(Integer directions) {
+    public void setDirections(String directions) {
         this.directions = directions;
     }
 
@@ -121,6 +124,7 @@ public class Recipe {
 
     public void setNotes(Notes notes) {
         this.notes = notes;
+        notes.setRecipe(this);
     }
 
     public Difficulty getDifficulty() {
@@ -145,5 +149,11 @@ public class Recipe {
 
     public void setCategories(Set<Category> categories) {
         this.categories = categories;
+    }
+
+    public Recipe addIngredient(Ingredient ingredient){
+        ingredient.setRecipe(this);
+        this.ingredients.add(ingredient);
+        return this;
     }
 }

@@ -10,6 +10,7 @@ public class UnitOfMeasure {
     private Long id;
 
     private String uom;
+    private String description;
 
     public Long getId() {
         return id;
@@ -25,5 +26,13 @@ public class UnitOfMeasure {
 
     public void setUom(String uom) {
         this.uom = uom;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
