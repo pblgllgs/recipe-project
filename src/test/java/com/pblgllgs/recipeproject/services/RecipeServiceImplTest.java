@@ -1,5 +1,7 @@
 package com.pblgllgs.recipeproject.services;
 
+import com.pblgllgs.recipeproject.converters.RecipeCommandToRecipe;
+import com.pblgllgs.recipeproject.converters.RecipeToRecipeCommand;
 import com.pblgllgs.recipeproject.models.Recipe;
 import com.pblgllgs.recipeproject.repositories.RecipeRepository;
 import org.junit.jupiter.api.AfterEach;
@@ -21,12 +23,14 @@ class RecipeServiceImplTest {
     private AutoCloseable closeable;
     @Mock
     private RecipeRepository recipeRepository;
-
+    private RecipeToRecipeCommand recipeToRecipeCommand;
+    private RecipeCommandToRecipe recipeCommandToRecipe;
     @BeforeEach
     void setUp() {
 
         closeable = MockitoAnnotations.openMocks(this);
-        recipeService = new RecipeServiceImpl(recipeRepository);
+
+        recipeService = new RecipeServiceImpl(recipeRepository, recipeCommandToRecipe, recipeToRecipeCommand);
     }
 
     @AfterEach
