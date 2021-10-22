@@ -1,5 +1,6 @@
 package com.pblgllgs.recipeproject.services;
 
+import com.pblgllgs.recipeproject.commands.RecipeCommand;
 import com.pblgllgs.recipeproject.converters.RecipeCommandToRecipe;
 import com.pblgllgs.recipeproject.converters.RecipeToRecipeCommand;
 import com.pblgllgs.recipeproject.models.Recipe;
@@ -25,6 +26,7 @@ class RecipeServiceImplTest {
     private RecipeRepository recipeRepository;
     private RecipeToRecipeCommand recipeToRecipeCommand;
     private RecipeCommandToRecipe recipeCommandToRecipe;
+
     @BeforeEach
     void setUp() {
 
@@ -67,6 +69,15 @@ class RecipeServiceImplTest {
         Assertions.assertEquals(recipes.size(), 1);
         verify(recipeRepository, times(1)).findAll();
         verify(recipeRepository, never()).findById(anyLong());
+    }
+
+    @Test
+    public void testDeleteById() throws Exception{
+        Long idToDelete = Long.valueOf(2L);
+        recipeService.deleteById(idToDelete);
+
+
+        verify(recipeRepository,times(1)).deleteById(idToDelete);
     }
 
 
